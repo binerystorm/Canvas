@@ -82,7 +82,7 @@ class Slider_c(Static):
         super().__init__(pos, size)
         self.max_value: int = val_max
         self.min_value: int = val_min
-        self.value: int = val_min
+        self.value: int = val_max
         self.slide_color: Color = Color(0,0,255)
         self.grip_color: Color = Color(255,0,0)
         self.dragging_b: bool = False
@@ -93,9 +93,9 @@ class Slider_c(Static):
                     SLIDER_HEIGHT)
         self.grip: pg.rect.Rect = \
             pg.Rect(
-            # the posistion my be (0,0) because the grip will be clamped to the slider
+            # the posistion my be (100,0) because the grip will be clamped to the slider
             # in any case
-                    0,
+                    100,
                     0,
                     SLIDER_GRIP_SIZE,
                     SLIDER_GRIP_SIZE) 
@@ -180,7 +180,7 @@ class ColorChanger_c(Static):
     
     def draw(self, screen: pg.surface.Surface) -> None:
         HIT_BOX_BW: Final[int] = 5
-        pg.draw.rect(screen, self.border_color, self.hit_box, HIT_BOX_BW)
+        #pg.draw.rect(screen, self.border_color, self.hit_box, HIT_BOX_BW)
 
         self.slider_r.draw(screen)
         self.slider_g.draw(screen)
@@ -247,7 +247,6 @@ class Canvas_c(Static):
     def draw(self, screen: pg.surface.Surface) -> None:
         # TODO: change mothod of drawing canvas
         HIT_BOX_BW: Final[int] = 5
-        pg.draw.rect(screen, self.border_color, self.hit_box, HIT_BOX_BW)
         for px in self.pixel_array:
             rect: pg.rect.Rect
             rect = pg.Rect(px.pos.x * self.pixel_size,
@@ -255,6 +254,7 @@ class Canvas_c(Static):
                            self.pixel_size,
                            self.pixel_size)
             pg.draw.rect(screen, px.color, rect)
+        pg.draw.rect(screen, self.border_color, self.hit_box, HIT_BOX_BW)
             # px.draw(screen)
 
     def update(self) -> None:
